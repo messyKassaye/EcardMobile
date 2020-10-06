@@ -11,13 +11,13 @@ import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
 import android.widget.Toast;
 
-import com.example.foragentss.dashboard.ui.activities.AcceptCardActivity;
+import com.example.foragentss.MainActivity;
 
 public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
     private WifiP2pManager wifiP2pManager;
     private Channel channel;
-    private AcceptCardActivity mainActivity;
-    public WiFiDirectBroadcastReceiver(WifiP2pManager wifiP2pManager,Channel channel,AcceptCardActivity mainActivity){
+    private MainActivity mainActivity;
+    public WiFiDirectBroadcastReceiver(WifiP2pManager wifiP2pManager,Channel channel,MainActivity mainActivity){
         this.wifiP2pManager = wifiP2pManager;
         this.channel = channel;
         this.mainActivity = mainActivity;
@@ -31,15 +31,15 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
             int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1);
             if (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
                 // Wifi P2P is enabled
-                mainActivity.wifiEnable();
+               // mainActivity.wifiEnable();
             } else {
                 // Wi-Fi P2P is not enabled
-                mainActivity.wifiIsNotEnable();
+               // mainActivity.wifiIsNotEnable();
             }
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             // Call WifiP2pManager.requestPeers() to get a list of current peers
             if (wifiP2pManager!=null){
-                wifiP2pManager.requestPeers(channel,mainActivity.peerListListener);
+                //wifiP2pManager.requestPeers(channel,mainActivity.peerListListener);
             }
         } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
             // Respond to new connection or disconnections
@@ -49,13 +49,13 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
             NetworkInfo info = intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
             if (info.isConnected()){
-                wifiP2pManager.requestConnectionInfo(channel,mainActivity.connectionInfoListener);
+                //wifiP2pManager.requestConnectionInfo(channel,mainActivity.connectionInfoListener);
             }
 
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
             //Respond to you phone device change
             WifiP2pDevice myDevice =(WifiP2pDevice)intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_DEVICE);
-            mainActivity.myDevice(myDevice);
+            //mainActivity.myDevice(myDevice);
         }
     }
 }

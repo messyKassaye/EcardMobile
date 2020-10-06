@@ -7,37 +7,37 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.foragentss.dashboard.ui.home.HomeFragment"
+        android:name="com.example.foragentss.auth.agents.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.foragentss.dashboard.ui.myCards.MyCardsFragment"
+        android:name="com.example.foragentss.auth.agents.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.foragentss.dashboard.ui.myCustomers.MyCustomersFragment"
+        android:name="com.example.foragentss.auth.agents.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
         android:id="@+id/nav_tools"
-        android:name="com.example.foragentss.dashboard.ui.mySells.MySells"
+        android:name="com.example.foragentss.auth.agents.ui.tools.ToolsFragment"
         android:label="@string/menu_tools"
         tools:layout="@layout/fragment_tools" />
 
     <fragment
         android:id="@+id/nav_share"
-        android:name="com.example.foragentss.dashboard.ui.logout.LogoutFragment"
+        android:name="com.example.foragentss.auth.agents.ui.share.ShareFragment"
         android:label="@string/menu_share"
         tools:layout="@layout/fragment_share" />
 
     <fragment
         android:id="@+id/nav_send"
-        android:name="com.example.foragentss.dashboard.ui.settings.SendFragment"
+        android:name="com.example.foragentss.auth.agents.ui.send.SendFragment"
         android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
 </navigation>
