@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".auth.commons.fragments.CardRequestCardSelectionFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/cardSelectLoadingLayout"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:layout_gravity="center"
+                android:textSize="17sp"
+                android:text="Sending your request..."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/showConnectionsLayout"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Select for whom you want to send your card request"
+                android:textSize="17sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginBottom="15dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/connectionsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/cardSelectionMainLayout"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/selectCard"
+                    android:text="Select card type you want request"
+                    android:background="@drawable/tranparent_button"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <include layout="@layout/horiz_divider"/>
+            </LinearLayout>
+
+            <!--Five birr card layout -->
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal"
+                android:id="@+id/fiveBirrCardLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fiveBirrTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter the amount of 5 Birr card you want to request"
+                    >
+
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/fiveBirrEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/five_birr_card_close"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+            </LinearLayout>
+
+            <!--Five birr card layout -->
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal"
+                android:id="@+id/tenBirrCardLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tenBirrTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter the amount of 10 Birr card you want to request"
+                    >
+
+                    <EditText
+                        android:id="@+id/tenBirrEditText"
+                        android:inputType="number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/ten_birr_card_close"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+            </LinearLayout>
+
+
+            <!--Five birr card layout -->
+            <LinearLayout
+                android:id="@+id/fifteenBirrCardLayout"
+                android:visibility="gone"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fifteenTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter the amount of 15 Birr card you want to request"
+                    >
+
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/fifteenBirrEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/fifteen_birr_card_close"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+            </LinearLayout>
+
+
+            <!--Five birr card layout -->
+            <LinearLayout
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:id="@+id/twentyFiveBirrCardLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/twentyFiveBirrTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter the amount of 25 Birr card you want to request"
+                    >
+
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/twentyFiveBirrEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/twenty_five_birr_card_close"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+            </LinearLayout>
+
+
+            <!--Five birr card layout -->
+            <LinearLayout
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:id="@+id/fiftyBirrCardLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fiftyBirrTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter the amount of 50 Birr card you want to request"
+                    >
+
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/fiftyBirrEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/fifty_birr_card_close"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+            </LinearLayout>
+
+
+            <!--Five birr card layout -->
+            <LinearLayout
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:id="@+id/hundredBirrCardLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/hundredBirrTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter the amount of 100 Birr card you want to request"
+                    >
+
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/hundredBirrEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/hundred_birr_card_close"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/sendRequestBtn"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Please enter the amount you need to request"
+                    android:visibility="gone"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:id="@+id/errorShower"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/senMyRequestBTN"
+                    android:textColor="@android:color/white"
+                    android:text="Send my request"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_shape"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

@@ -45,6 +45,7 @@
         </LinearLayout>
 
         <ImageButton
+            android:background="@color/colorPrimary"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_settings_white_24dp"
             android:layout_width="wrap_content"

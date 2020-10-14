@@ -9,21 +9,28 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_my_cards"
             android:icon="@drawable/ic_sd_card_black_24dp"
             android:title="@string/menu_gallery" />
+
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_supervisor_account_black_24dp"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/card_request"
+            android:icon="@drawable/ic_send_black_24dp"
+            android:title="@string/card_request" />
+
         <item
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_attach_money_black_24dp"
             android:title="@string/menu_tools" />
         <item
-            android:id="@+id/card_request"
-            android:icon="@drawable/ic_send_black_24dp"
-            android:title="@string/card_request" />
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_supervisor_account_black_24dp"
+            android:title="@string/menu_slideshow" />
+        <item
+            android:id="@+id/nav_finance"
+            android:icon="@drawable/ic_account_balance_black_24dp"
+            android:title="@string/menu_slideshow" />
+
     </group>
 
     <item android:title="Communicate">

@@ -1,15 +1,29 @@
 package com.example.foragentss.auth.agents;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.foragentss.R;
+import com.example.foragentss.auth.agents.activities.FloatingButtonActivity;
+import com.example.foragentss.auth.agents.fragments.AllCardRequestFragment;
+import com.example.foragentss.auth.agents.ui.home.HomeFragment;
+import com.example.foragentss.auth.commons.fragments.MyCardRequestFragment;
+import com.example.foragentss.auth.commons.fragments.MyCardsFragment;
+import com.example.foragentss.auth.commons.fragments.NotificationFragment;
 import com.example.foragentss.auth.view_model.MeViewModel;
 import com.example.foragentss.constants.Constants;
+import com.example.foragentss.home.fragments.AddressFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -31,9 +45,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AgentsDashboard extends AppCompatActivity {
+public class AgentsDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    private AppBarConfiguration mAppBarConfiguration;
     private MeViewModel viewModel;
     private TextView fullName,email;
     private ImageView profileImage;
@@ -47,31 +60,46 @@ public class AgentsDashboard extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), FloatingButtonActivity.class);
+                startActivity(intent);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+
+
 
         View headerView = navigationView.getHeaderView(0);
         fullName = (TextView) headerView.findViewById(R.id.fullName);
         email = (TextView)headerView.findViewById(R.id.email);
         profileImage = headerView.findViewById(R.id.profileImage);
         viewModel = ViewModelProviders.of(this).get(MeViewModel.class);
-
+        showHome();
         //set view model value
         this.setView();
+    }
+
+    public void  showHome(){
+        getSupportActionBar().setTitle("Agents home");
+        Fragment fragment = new HomeFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
+    }
+
+    public void showAddress(String info){
+        getSupportActionBar().setTitle("Address setting");
+        Fragment fragment = new AddressFragment(3,info,"dashboard");
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
     }
 
     public void setView(){
@@ -88,7 +116,12 @@ public class AgentsDashboard extends AppCompatActivity {
     }
 
 
-
+    public  void showCardRequest(){
+        Fragment fragment = new AllCardRequestFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -97,9 +130,48 @@ public class AgentsDashboard extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id==R.id.action_home){
+            this.showHome();
+        }else if(id==R.id.action_notification){
+            this.showNotifications();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Fragment fragment = null;
+        if (id==R.id.nav_home){
+            fragment = new HomeFragment();
+            getSupportActionBar().setTitle("Agents home");
+        }else if (id==R.id.card_request){
+            fragment = new MyCardRequestFragment();
+            getSupportActionBar().setTitle("My card requests");
+        }else if (id==R.id.nav_my_cards){
+            fragment = new MyCardsFragment();
+            getSupportActionBar().setTitle("My cards");
+        }
+
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment);
+            ft.commit();
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public  void showNotifications(){
+        Fragment fragment = new NotificationFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

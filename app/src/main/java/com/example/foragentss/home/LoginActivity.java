@@ -19,6 +19,7 @@ import com.example.foragentss.MainActivity;
 import com.example.foragentss.R;
 import com.example.foragentss.auth.agents.AgentsDashboard;
 import com.example.foragentss.auth.models.LoginResponse;
+import com.example.foragentss.auth.retailers.RetailersDashboard;
 import com.example.foragentss.constants.Constants;
 import com.example.foragentss.http.MainHttpAdapter;
 import com.example.foragentss.http.interfaces.LoginService;
@@ -109,21 +110,24 @@ public class LoginActivity extends AppCompatActivity {
                     errorShower.setText("Incorrect email or password is used.");
                 }else if(response.code()==200){
 
-                    if(response.body().getRole().getId()<3&&response.body().getRole().getId()>5){
+                    if(response.body().getRole().getId()==2){
                         loginLoading.setVisibility(View.GONE);
                         loginBtn.setVisibility(View.VISIBLE);
                         errorShower.setTextColor(Color.RED);
-                        errorShower.setText("This application is created for car owners only. please use our web app for your purpose");
+                        errorShower.setText("This application is created for Agent and Retailers only. please use our web app for your purpose");
                     }else {
-                        if(response.body().getRole().getId()==2){
-
-                            setToken(response.body().getToken());
-                        }else if (response.body().getRole().getId()==3){
+                        if (response.body().getRole().getId()==3){
                             setToken(response.body().getToken());
                             Intent intent = new Intent(getApplicationContext(), AgentsDashboard.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+                        }else if (response.body().getRole().getId()==4){
+                            setToken(response.body().getToken());
+                            Intent intent = new Intent(getApplicationContext(), RetailersDashboard.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
                         }
+
                     }
 
                 }else {

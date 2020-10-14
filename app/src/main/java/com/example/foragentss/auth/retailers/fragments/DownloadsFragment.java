@@ -1,4 +1,4 @@
-package com.example.foragentss.auth.agents.fragments;
+package com.example.foragentss.auth.retailers.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,10 +13,9 @@ import android.view.ViewGroup;
 import com.example.foragentss.R;
 
 
-public class MyCardRequestFragment extends Fragment {
+public class DownloadsFragment extends Fragment {
 
-
-    public MyCardRequestFragment() {
+    public DownloadsFragment() {
         // Required empty public constructor
     }
 
@@ -32,8 +31,7 @@ public class MyCardRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_card_request, container, false);
+        return inflater.inflate(R.layout.fragment_downloads, container, false);
     }
-
 
 }

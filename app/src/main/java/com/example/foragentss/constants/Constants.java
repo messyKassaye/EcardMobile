@@ -6,8 +6,10 @@ import android.view.Display;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Constants {
     //10.0.2.2:8000
@@ -89,5 +91,28 @@ public class Constants {
         String date = Constants.currentDate();
         String today = date.substring(0,date.lastIndexOf(" "));
         return  today;
+    }
+
+    public static String getFormatedAmount(double amount){
+        return NumberFormat.getNumberInstance(Locale.US).format(amount);
+    }
+
+    public static int getCardTypeValue(int id){
+        int result =0;
+        if (id==1){
+            result=5;
+        }else if (id==2){
+            result = 10;
+        }else if(id==3){
+            result =15;
+        }else if (id==4){
+            result = 25;
+        }else if (id==5){
+            result = 50;
+        }else if (id==6){
+            result = 100;
+        }
+
+        return result;
     }
 }

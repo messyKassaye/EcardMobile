@@ -1,21 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView android:id="@+id/newCardRequestCard"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:contentPadding="20dp"
+    android:layout_marginBottom="20dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".auth.agents.fragments.NewCardRequestFragment">
-    <LinearLayout
-        android:orientation="vertical"
+    android:layout_height="wrap_content"
+    tools:context=".auth.agents.fragments.CardRequestFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <!--header menu-->
-        <RelativeLayout
-            android:padding="5dp"
+        <ProgressBar
+            android:id="@+id/cardRequestLoader"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/noCardRequestIsFound"
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TextView
+                android:text="No one sends card request until now ):"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
-        </RelativeLayout>
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cardRequestMainLayout"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_gravity="center"
+                android:text="You have new card request"
+                android:textSize="17sp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/requested_amount"
+                android:background="@drawable/circle"
+                android:textColor="@android:color/white"
+                android:text="0"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+        </LinearLayout>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

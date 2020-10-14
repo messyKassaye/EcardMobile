@@ -4,17 +4,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <fragment
-            android:id="@+id/new_request_fragment"
-            android:name="com.example.foragentss.auth.agents.fragments.NewCardRequestFragment"
-            android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:id="@+id/homeLoading"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+
+        <LinearLayout
+            android:layout_alignParentTop="true"
+            android:id="@+id/homeMainLayout"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <fragment
+                android:id="@+id/new_request_fragment"
+                android:name="com.example.foragentss.auth.agents.fragments.CardRequestFragment"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content"/>
+
+            <fragment
+                android:id="@+id/card_price"
+                android:layout_marginBottom="20dp"
+                android:name="com.example.foragentss.auth.agents.fragments.CardPriceFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <fragment
+                android:id="@+id/bank_account"
+                android:name="com.example.foragentss.auth.agents.fragments.BankAccountFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <fragment
+                android:id="@+id/partner_agent_fragment"
+                android:name="com.example.foragentss.auth.commons.PartnerAndAgentShowerFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
 </ScrollView>
