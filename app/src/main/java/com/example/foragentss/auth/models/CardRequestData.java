@@ -11,6 +11,7 @@ public class CardRequestData {
         private List<User> user;
         private List<Price> price;
         private Payment payment;
+        private CardType card_type;
 
     public int getId() {
         return id;
@@ -50,5 +51,13 @@ public class CardRequestData {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    public CardType getCard_type() {
+        return card_type;
+    }
+
+    public void setCard_type(CardType card_type) {
+        this.card_type = card_type;
     }
 }

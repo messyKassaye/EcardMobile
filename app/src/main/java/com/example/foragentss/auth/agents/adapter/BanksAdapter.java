@@ -121,42 +121,11 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.ViewHolder> 
                     }
                 });
 
-        ((Button)dialog.findViewById(R.id.updateMyAccountBtn))
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ((LinearLayout)dialog.findViewById(R.id.bankAccountLoadingLayout))
-                                .setVisibility(View.VISIBLE);
-                        ((LinearLayout)dialog.findViewById(R.id.bankAccountMainLayout))
-                                .setVisibility(View.GONE);
-
-                        accountNumber = ((EditText)dialog.findViewById(R.id.accountNumberInput))
-                                .getText().toString();
-                        holderName = ((EditText)dialog.findViewById(R.id.holderNameInput))
-                                .getText().toString();
-
-                        if (account_id>0){
-                            BankAccount bankAccount = new BankAccount();
-                            bankAccount.setId(account_id);
-                            bankAccount.setAccount_number(accountNumber);
-                            bankAccount.setHolder_full_name(holderName);
-                            bankAccountViewModel.update(account_id,bankAccount);
-                        }
-
-                    }
-                });
 
          viewHolder.edit.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 ((AppCompatButton)dialog.findViewById(R.id.updateMyAccountBtn))
-                         .setVisibility(View.VISIBLE);
-                 ((AppCompatButton)dialog.findViewById(R.id.setMyAccountBtn))
-                         .setVisibility(View.GONE);
-                 ((TextView)dialog.findViewById(R.id.headerTitle)).setText("Edit your accout for "+nearBy.getName());
-                 ((EditText)dialog.findViewById(R.id.accountNumberInput)).setText(nearBy.getMe().get(0).getAccount_number());
-                 ((EditText)dialog.findViewById(R.id.holderNameInput)).setText(nearBy.getMe().get(0).getHolder_full_name());
-                 dialog.show();
+
              }
          });
 
@@ -197,13 +166,6 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.ViewHolder> 
                     .setVisibility(View.VISIBLE);
             ((LinearLayout)dialog.findViewById(R.id.bankAccountMainLayout))
                     .setVisibility(View.GONE);
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            dialog.dismiss();
-                        }
-                    },
-                    2200);
         }
 
     }

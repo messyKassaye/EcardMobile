@@ -16,24 +16,15 @@
         <item
             android:id="@+id/card_request"
             android:icon="@drawable/ic_send_black_24dp"
-            android:title="@string/card_request" />
+            android:title="My card requests" />
 
         <item
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_attach_money_black_24dp"
             android:title="@string/menu_tools" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_supervisor_account_black_24dp"
-            android:title="@string/menu_slideshow" />
-        <item
-            android:id="@+id/nav_finance"
-            android:icon="@drawable/ic_account_balance_black_24dp"
-            android:title="@string/menu_slideshow" />
-
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="others">
         <menu>
             <item
                 android:id="@+id/nav_share"

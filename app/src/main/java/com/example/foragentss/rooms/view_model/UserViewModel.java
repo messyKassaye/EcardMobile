@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.foragentss.rooms.entity.User;
+import com.example.foragentss.rooms.entity.UserRoom;
 import com.example.foragentss.rooms.respository.UsersRepository;
 
 import java.util.List;
@@ -21,19 +21,19 @@ public class UserViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<List<User>> index(){
+    public LiveData<List<UserRoom>> index(){
         return  usersRepository.index();
     }
 
-    public void store(User user){
-        usersRepository.store(user);
+    public void store(UserRoom userRoom){
+        usersRepository.store(userRoom);
     }
 
-   public LiveData<List<User>> showUser(String phone,String password){
+   public LiveData<List<UserRoom>> showUser(String phone, String password){
         return usersRepository.showUser(phone,password);
    }
 
-   public LiveData<List<User>> me(String phone){
+   public LiveData<List<UserRoom>> me(String phone){
         return  usersRepository.me(phone);
    }
 }

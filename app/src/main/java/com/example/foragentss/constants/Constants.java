@@ -1,5 +1,8 @@
 package com.example.foragentss.constants;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -19,6 +22,7 @@ public class Constants {
     private static final String API_URL="http://10.0.2.2:8000/api/";
     private static final String API_AUTH_URL="http://10.0.2.2:8000/api/auth/";
     private static final String API_AUTH_ADMIN = "http://10.0.2.2:8000/api/admin/";
+    private static final String API_RETAILERS_ADMIN = "http://10.0.2.2:8000/api/retailers/";
     private static final String DATA_PATH = "advertData";
     private static final String DB_NAME = "TabletAdsDB";
     private static int realWidth,realHeight;
@@ -114,5 +118,15 @@ public class Constants {
         }
 
         return result;
+    }
+
+
+    public  static boolean isOnline(Context context){
+        ConnectivityManager connectivityManager= (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        if (info != null && info.isConnectedOrConnecting()){
+            return true;
+        }
+        return false;
     }
 }

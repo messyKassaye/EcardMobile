@@ -1,8 +1,11 @@
 package com.example.foragentss.auth.models;
 
-public class CardPrice {
+import java.io.Serializable;
+
+public class CardPrice implements Serializable {
     private int id;
     private double percentage;
+    private double percentage_value;
     private int user_id;
 
     public int getId() {
@@ -27,5 +30,13 @@ public class CardPrice {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public double getPercentage_value() {
+        return percentage_value;
+    }
+
+    public void setPercentage_value(double percentage_value) {
+        this.percentage_value = percentage_value;
     }
 }

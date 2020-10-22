@@ -4,10 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +11,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foragentss.R;
-import com.example.foragentss.auth.agents.activities.FloatingButtonActivity;
 import com.example.foragentss.auth.commons.fragments.CardRequestCardSelectionFragment;
 import com.example.foragentss.auth.models.CardType;
 

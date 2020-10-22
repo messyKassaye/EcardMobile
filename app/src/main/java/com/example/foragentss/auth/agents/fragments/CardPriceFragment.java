@@ -38,9 +38,10 @@ public class CardPriceFragment extends Fragment implements View.OnClickListener 
     private CardPriceViewModel cardPriceViewModel;
     private Dialog dialog;
     private double percentages;
-    private String updatePercentage;
+    private String updatePercentage,sendPercentage;
     private int id;
     private View view;
+
     public CardPriceFragment() {
         // Required empty public constructor
     }
@@ -70,6 +71,7 @@ public class CardPriceFragment extends Fragment implements View.OnClickListener 
         cardPriceViewModel = ViewModelProviders.of(getActivity())
                 .get(CardPriceViewModel.class);
         cardPriceViewModel.storeResponse().observe(getActivity(),this::consumeResponse);
+
         cardPriceViewModel.index().enqueue(new Callback<ArrayList<CardPrice>>() {
             @Override
             public void onResponse(Call<ArrayList<CardPrice>> call, Response<ArrayList<CardPrice>> response) {
@@ -113,40 +115,20 @@ public class CardPriceFragment extends Fragment implements View.OnClickListener 
             case R.id.sendMyPrice:
                 sendPrice();
                 break;
-            case R.id.updatePrice:
-                ((Button)dialog.findViewById(R.id.updateCardPrice)).setVisibility(View.VISIBLE);
-                ((Button)dialog.findViewById(R.id.sendMyPrice)).setVisibility(View.GONE);
-                ((EditText)dialog.findViewById(R.id.cardPriceInput)).setText(""+percentages);
-                dialog.show();
-                break;
-            case R.id.updateCardPrice:
-                updatePrice();
-                break;
-
         }
     }
 
     public void sendPrice(){
         dialog.findViewById(R.id.cardPriceLoadingLayout).setVisibility(View.VISIBLE);
         dialog.findViewById(R.id.cardPriceMainLayout).setVisibility(View.GONE);
-        String percentage = ((EditText)dialog.findViewById(R.id.cardPriceInput)).getText()
+        sendPercentage = ((EditText)dialog.findViewById(R.id.cardPriceInput)).getText()
                 .toString();
         CardPrice cardPrice = new CardPrice();
-        cardPrice.setPercentage(Double.parseDouble(percentage));
+        cardPrice.setPercentage(Double.parseDouble(sendPercentage));
         cardPriceViewModel.store(cardPrice);
-
-
     }
 
-    public void updatePrice(){
-        dialog.findViewById(R.id.cardPriceLoadingLayout).setVisibility(View.VISIBLE);
-        dialog.findViewById(R.id.cardPriceMainLayout).setVisibility(View.GONE);
-        updatePercentage = ((EditText)dialog.findViewById(R.id.cardPriceInput)).getText()
-                .toString();
-        CardPrice cardPrice = new CardPrice();
-        cardPrice.setPercentage(Double.parseDouble(updatePercentage));
-        cardPriceViewModel.update(id,cardPrice);
-    }
+
 
 
     private void consumeResponse(ApiResponse apiResponse) {
@@ -175,25 +157,11 @@ public class CardPriceFragment extends Fragment implements View.OnClickListener 
     private void renderSuccessResponse(SuccessResponse response) {
         System.out.println("STATUS: "+response.isStatus());
         if(response.isStatus()) {
-            ((TextView)dialog.findViewById(R.id.successMessage))
-                    .setVisibility(View.VISIBLE);
-            ((LinearLayout)dialog.findViewById(R.id.cardPriceMainLayout))
-                    .setVisibility(View.GONE);
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            dialog.dismiss();
-                            view.findViewById(R.id.priceNotSet)
-                                    .setVisibility(View.GONE);
-                            view.findViewById(R.id.priceMainLayout)
-                                    .setVisibility(View.VISIBLE);
-                            ((TextView)view.findViewById(R.id.cardPriceValue))
-                                    .setText(""+updatePercentage);
-
-
-                        }
-                    },
-                    2200);
+            view.findViewById(R.id.priceNotSet).setVisibility(View.GONE);
+            view.findViewById(R.id.priceMainLayout).setVisibility(View.VISIBLE);
+            ((TextView)view.findViewById(R.id.cardPriceValue))
+                    .setText(""+sendPercentage);
+            dialog.dismiss();
         }
 
     }

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".auth.retailers.fragments.DownloadLoginFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/loginHeader"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Login is required"
+            android:textSize="17sp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/loginHeader"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:id="@+id/wifiIsNotOn"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/ic_portable_wifi_off_black_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="17sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="center"
+            android:text="Wi-fi or mobile data is not On. Open your Mobile data or Wi-fi"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/downloadMainLayout"
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/loginInfo"
+            android:layout_gravity="center"
+            android:textColor="@color/textSecondary"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="50dp"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login to download cards" />
+        <!-- Email Label -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:theme="@style/EditTextHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/dialogInputPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/textColor"
+                app:backgroundTint="@color/textColor"
+                android:hint="Email or Phone number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Password Label -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:theme="@style/EditTextHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/dialogInputpassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/textColor"
+                android:inputType="textPassword"
+                android:textColor="@color/textColor"
+                app:backgroundTint="@color/textColor"
+                android:hint="Password"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/dialogErrorShower"
+            android:layout_gravity="center"
+            android:textColor="@color/errorColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dialogLoginBtn"
+            android:textAllCaps="false"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/background_color"
+            android:background="@drawable/button_shape"
+            android:padding="12dp"
+            android:text="Login"/>
+
+        <ProgressBar
+            android:id="@+id/dialogLoginLoading"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</RelativeLayout>

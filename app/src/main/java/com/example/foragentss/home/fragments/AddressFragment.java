@@ -35,6 +35,7 @@ import com.example.foragentss.auth.retailers.RetailersDashboard;
 import com.example.foragentss.auth.utils.ApiResponse;
 import com.example.foragentss.auth.view_model.AddressViewModel;
 import com.example.foragentss.auth.view_model.RegionCityViewModel;
+import com.example.foragentss.home.RegistrationActivity;
 import com.example.foragentss.home.adapter.CitiesAdapter;
 import com.example.foragentss.home.adapter.RegionCityAdapter;
 
@@ -214,9 +215,8 @@ public class AddressFragment extends Fragment implements View.OnClickListener {
                     getActivity().startActivity(intent);
                 }
             }else if (roleId==4){
-                Intent intent = new Intent(getActivity(), RetailersDashboard.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intent);
+                RegistrationActivity registrationActivity =(RegistrationActivity)getActivity();
+                registrationActivity.showDeviceConfig();
             }
         }
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/download_content_frames"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".auth.retailers.activities.DownloadActivity">
+
+
+
+    <LinearLayout
+        android:id="@+id/downloadMainLayouts"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <fragment
+            android:id="@+id/download_fragment"
+            android:name="com.example.foragentss.auth.retailers.fragments.DownloadLoginFragment"
+            android:tag="download_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</FrameLayout>

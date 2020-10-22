@@ -6,6 +6,9 @@ public class CardRequest {
     private int amount;
     private int company_agent_id;
     private int index;
+    private int payment_type_id;
+    private int requester_id;
+    private String status;
     public CardRequest() {
     }
 
@@ -47,5 +50,29 @@ public class CardRequest {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public int getPayment_type_id() {
+        return payment_type_id;
+    }
+
+    public void setPayment_type_id(int payment_type_id) {
+        this.payment_type_id = payment_type_id;
+    }
+
+    public int getRequester_id() {
+        return requester_id;
+    }
+
+    public void setRequester_id(int requester_id) {
+        this.requester_id = requester_id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

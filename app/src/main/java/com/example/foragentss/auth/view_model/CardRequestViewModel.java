@@ -47,4 +47,15 @@ public class CardRequestViewModel extends AndroidViewModel {
                         throwable -> responseLiveData.setValue(ApiResponse.error(throwable))
                 ));
     }
+
+    public void update(int id,String status){
+        Observable.just(cardRequestRepository.update(id,status)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe((d) -> responseLiveData.setValue(ApiResponse.loading()))
+                .subscribe(
+                        result -> responseLiveData.setValue(ApiResponse.success(result)),
+                        throwable -> responseLiveData.setValue(ApiResponse.error(throwable))
+                ));
+    }
 }

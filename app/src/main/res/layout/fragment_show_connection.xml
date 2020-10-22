@@ -60,7 +60,7 @@
         <TextView
             android:textColor="@android:color/holo_red_light"
             android:textSize="17sp"
-            android:text="We can't find any partners or agents working with. Have you send any connect request to any agents that you know before?"
+            android:text="We can't find any partners or agents working with you. Have you send any connect request to any agents that you know before?"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView

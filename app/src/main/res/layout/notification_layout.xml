@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_marginBottom="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/avatar"
+                android:background="@drawable/circle"
+                android:textColor="@color/white"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:textSize="20sp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+            <LinearLayout
+                android:id="@+id/names"
+                android:orientation="vertical"
+                android:layout_toRightOf="@+id/avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/notifierName"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/notificationName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_toRightOf="@+id/avatar"
+                android:paddingTop="10dp"
+                android:layout_below="@+id/names"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/horiz_divider"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/mainMessage"
+            android:layout_below="@+id/header"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:id="@+id/notificationButtonLayout"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/mainMessage"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/removeConnect"
+                android:textAllCaps="false"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/tranparent_button"
+                android:text="Remove"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_alignParentRight="true"
+                android:id="@+id/acceptBtn"
+                android:textAllCaps="false"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button_shape"
+                android:text="Accept"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/displayMessage"
+            android:layout_below="@+id/mainMessage"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="17sp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/loadingLayout"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/mainMessage"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="Updating..."
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

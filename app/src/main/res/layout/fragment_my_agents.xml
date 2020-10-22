@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".auth.retailers.fragments.MyAgentsFragment"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+        <LinearLayout
+            android:id="@+id/noAgentLayout"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/noAgentInfo"
+                android:text="You have select your agent. having agent will help you to get cards from where you are. There are many Partners and agents near by your region and city. Do you want to see them and do you want to connect with them?"
+                android:textSize="17sp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/showMeMyNearByAgent"
+                android:textAllCaps="false"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:textColor="@color/background_color"
+                android:background="@drawable/button_shape"
+                android:padding="12dp"
+                android:text="Yes show me my near by agents"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/nearByLayout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <fragment
+                android:tag="retailer"
+                android:id="@+id/nearByFragment"
+                android:name="com.example.foragentss.auth.commons.fragments.NearBypartnersFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/myProfileMainLayout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/agentsRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+</LinearLayout>

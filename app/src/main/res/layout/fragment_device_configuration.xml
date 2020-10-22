@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".auth.retailers.fragments.DeviceConfigurationFragment">
+
+    <LinearLayout
+        android:id="@+id/deviceCheckingLayout"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp"
+            android:text="Checking device..."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/deviceSettingLoadingLayout"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_gravity="center"
+            android:text="Setting your device..."
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/deviceAlreadySetLayout"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/deviceInfo"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/lostDeviceBTN"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp"
+                android:textColor="@android:color/holo_red_light"
+                android:background="@drawable/danger_button"
+                android:padding="12dp"
+                android:text="Yes, I lost it and i need to use this device"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/useThisDevice"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/tranparent_button"
+                android:padding="12dp"
+                android:text="I just need to use this device"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/deviceSettingMainLayout"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="17sp"
+            android:layout_height="wrap_content"
+            android:text="Your registration is done successfully. Since you are registered as Retailers you have to set your phone or your device. This device is useful to store your cards locally and to sell them without the need of internet. So start setting your device now" />
+
+        <TextView
+            android:text="Once you set your device you will download your cards and store them on the phone. Then you will start selling your cards without the need of internet"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="17sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="So have you decide to sell cards using this phone?"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="17sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/setMyDevice"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/background_color"
+            android:background="@drawable/button_shape"
+            android:padding="12dp"
+            android:text="Yes, I need to use this device"/>
+
+    </LinearLayout>
+
+</LinearLayout>

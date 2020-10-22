@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
+    android:padding="20dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".auth.commons.fragments.NotificationFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_gravity="start"
+        android:textColor="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:text="New notifications" />
+    <include layout="@layout/horiz_divider"/>
+    <TextView
+        android:id="@+id/noNewNotification"
+        android:textColor="@android:color/holo_red_light"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newNotificationRecyclerView"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-</FrameLayout>
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="start"
+        android:textColor="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:text="Previous notifications" />
+    <include layout="@layout/horiz_divider"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/oldestNotificationRecyclerView"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ProgressBar
+        android:id="@+id/notificationLoader"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

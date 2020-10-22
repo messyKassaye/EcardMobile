@@ -1,20 +1,17 @@
 package com.example.foragentss.auth.agents;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.foragentss.R;
-import com.example.foragentss.auth.agents.activities.FloatingButtonActivity;
 import com.example.foragentss.auth.agents.fragments.AllCardRequestFragment;
 import com.example.foragentss.auth.agents.ui.home.HomeFragment;
 import com.example.foragentss.auth.commons.fragments.MyCardRequestFragment;
 import com.example.foragentss.auth.commons.fragments.MyCardsFragment;
 import com.example.foragentss.auth.commons.fragments.NotificationFragment;
+import com.example.foragentss.auth.models.CardRequestData;
+import com.example.foragentss.auth.models.Notification;
 import com.example.foragentss.auth.view_model.MeViewModel;
-import com.example.foragentss.constants.Constants;
 import com.example.foragentss.home.fragments.AddressFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +22,6 @@ import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -41,29 +34,24 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.ArrayList;
 
 public class AgentsDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private MeViewModel viewModel;
     private TextView fullName,email;
     private ImageView profileImage;
+    private ArrayList<Notification> notifications = new ArrayList<>();
+    private TextView  textCartItemCount;
+    int mCartItemCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agents_dashboard);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FloatingButtonActivity.class);
-                startActivity(intent);
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -105,6 +93,11 @@ public class AgentsDashboard extends AppCompatActivity implements NavigationView
     public void setView(){
         viewModel.me().observe(this,meResponse->{
             if(meResponse!=null){
+                mCartItemCount =meResponse.getData().getRelations().getNotification().size();
+                notifications.addAll(meResponse.getData().getRelations().getNotification());
+
+                setupBadge();
+
                 fullName.setText(meResponse.getData().getAttribute().getFirst_name()+" "
                         +meResponse.getData().getAttribute().getLast_name());
                 email.setText(meResponse.getData().getAttribute().getEmail());
@@ -116,8 +109,9 @@ public class AgentsDashboard extends AppCompatActivity implements NavigationView
     }
 
 
-    public  void showCardRequest(){
-        Fragment fragment = new AllCardRequestFragment();
+    public  void showCardRequest(ArrayList<CardRequestData> cardRequests,String info){
+        getSupportActionBar().setTitle("Card requests");
+        Fragment fragment = new AllCardRequestFragment(cardRequests,info);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
@@ -126,7 +120,33 @@ public class AgentsDashboard extends AppCompatActivity implements NavigationView
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.agents_dashboard, menu);
+        final MenuItem notificationMenu =menu.findItem(R.id.action_notification);
+        View actionView = notificationMenu.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(notificationMenu);
+            }
+        });
         return true;
+    }
+
+    private void setupBadge() {
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     @Override
@@ -168,7 +188,11 @@ public class AgentsDashboard extends AppCompatActivity implements NavigationView
     }
 
     public  void showNotifications(){
-        Fragment fragment = new NotificationFragment();
+        getSupportActionBar().setTitle("Notifications");
+        mCartItemCount=0;
+        setupBadge();
+
+        Fragment fragment = new NotificationFragment(notifications);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.addToBackStack(null);

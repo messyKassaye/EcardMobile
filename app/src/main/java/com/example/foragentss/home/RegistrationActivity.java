@@ -25,6 +25,8 @@ import com.example.foragentss.R;
 import com.example.foragentss.auth.agents.AgentsDashboard;
 import com.example.foragentss.auth.models.LoginResponse;
 import com.example.foragentss.auth.models.User;
+import com.example.foragentss.auth.retailers.RetailersDashboard;
+import com.example.foragentss.auth.retailers.fragments.DeviceConfigurationFragment;
 import com.example.foragentss.constants.Constants;
 import com.example.foragentss.home.fragments.AddressFragment;
 import com.example.foragentss.home.fragments.RegistrationFragment;
@@ -60,6 +62,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void showAddressFragment(int roleId){
         Fragment fragment = new AddressFragment(roleId,"You are registered successfully. Now tell us where you live.","registration");
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.registration_content_frame,fragment);
+        transaction.commit();
+    }
+
+    public void showDeviceConfig(){
+        Fragment fragment = new DeviceConfigurationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.registration_content_frame,fragment);
         transaction.commit();

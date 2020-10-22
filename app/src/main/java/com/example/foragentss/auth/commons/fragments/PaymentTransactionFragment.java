@@ -65,7 +65,7 @@ public class PaymentTransactionFragment extends Fragment {
         TextView infoTextView =view.findViewById(R.id.paymentIndo);
         infoTextView.setText("You card request has been send successfully");
 
-        double price = selectedUser.getCard_price().get(0).getPercentage();
+        double price = selectedUser.getCard_price().get(0).getPercentage_value();
         totalPaymentAdapter = new TotalPaymentAdapter(getContext(),price,cardRequestArrayList);
         totalPaymentRecyclerView = view.findViewById(R.id.totalPaymentRecyclerView);
         totalPaymentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
@@ -77,7 +77,7 @@ public class PaymentTransactionFragment extends Fragment {
         double totalPayment = getTotalPayment(cardRequestArrayList,price);
         ((TextView)view.findViewById(R.id.totalPayment)).setText("Total payment: "+Constants.getFormatedAmount(totalPayment)+" ETB");
 
-        ((TextView)view.findViewById(R.id.bankAccountInfo)).setText("Your can transfer your payment to" +
+        ((TextView)view.findViewById(R.id.bankAccountInfo)).setText("You can transfer your payment to" +
                 " "+selectedUser.getFirst_name()+" Via the following banks of his/her account");
 
         bankAccountAdapter = new BankAccountAdapter(getContext(),selectedUser.getBank_account(),sendedCardRequestId);

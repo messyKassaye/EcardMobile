@@ -1,6 +1,8 @@
 package com.example.foragentss.auth.models;
 
-public class Connect {
+import java.io.Serializable;
+
+public class Connect implements Serializable {
     private int id;
     private int company_user_id;
     private int agent_partner_retailer_id;

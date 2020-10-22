@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.MenuItem;
@@ -20,7 +22,9 @@ import com.example.foragentss.R;
 import com.example.foragentss.auth.agents.AgentsDashboard;
 import com.example.foragentss.auth.models.LoginResponse;
 import com.example.foragentss.auth.retailers.RetailersDashboard;
+import com.example.foragentss.auth.retailers.fragments.DeviceConfigurationFragment;
 import com.example.foragentss.constants.Constants;
+import com.example.foragentss.home.fragments.LoginFragment;
 import com.example.foragentss.http.MainHttpAdapter;
 import com.example.foragentss.http.interfaces.LoginService;
 import com.example.foragentss.rooms.view_model.UserViewModel;
@@ -39,47 +43,31 @@ import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText phone,passowrd;
-    private TextView errorShower;
-    private Button loginBtn;
-    private UserViewModel userViewModel;
-    private ProgressBar loginLoading;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("ECard login");
 
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        showHome();
 
-        phone = findViewById(R.id.inputPhone);
-        passowrd = findViewById(R.id.input_password);
-        errorShower = findViewById(R.id.errorShower);
-        loginBtn = findViewById(R.id.loginBtn);
-        loginLoading = findViewById(R.id.loginLoading);
+    }
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phoneText = phone.getText().toString();
-                String passwordText = passowrd.getText().toString();
-                if (phoneText.equals("")){
-                    errorShower.setVisibility(View.VISIBLE);
-                    errorShower.setText("Please enter your phone");
-                }else if (passwordText.equals("")){
-                    errorShower.setVisibility(View.VISIBLE);
-                    errorShower.setText("Please enter your password");
-                }else {
-                    loginBtn.setVisibility(View.GONE);
-                    errorShower.setVisibility(View.VISIBLE);
-                    errorShower.setTextColor(Color.GREEN);
-                    errorShower.setText("Login on progress...");
-                    loginLoading.setVisibility(View.VISIBLE);
-                    login(phoneText,passwordText);
-                }
-            }
-        });
+    public void showHome(){
+        Fragment fragment = new LoginFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.login_content_frame,fragment);
+        transaction.commit();
+    }
+
+    public void checkDeviceConfiguration(){
+        Fragment fragment = new DeviceConfigurationFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.login_content_frame,fragment);
+        transaction.commit();
 
     }
 
@@ -94,66 +82,4 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void login(String email,String password){
-
-        Retrofit retrofit= MainHttpAdapter.getAuthApi();
-        LoginService loginService = retrofit.create(LoginService.class);
-
-        Call<LoginResponse> call = loginService.login(email,password);
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.code()==403){
-                    loginLoading.setVisibility(View.GONE);
-                    loginBtn.setVisibility(View.VISIBLE);
-                    errorShower.setTextColor(Color.RED);
-                    errorShower.setText("Incorrect email or password is used.");
-                }else if(response.code()==200){
-
-                    if(response.body().getRole().getId()==2){
-                        loginLoading.setVisibility(View.GONE);
-                        loginBtn.setVisibility(View.VISIBLE);
-                        errorShower.setTextColor(Color.RED);
-                        errorShower.setText("This application is created for Agent and Retailers only. please use our web app for your purpose");
-                    }else {
-                        if (response.body().getRole().getId()==3){
-                            setToken(response.body().getToken());
-                            Intent intent = new Intent(getApplicationContext(), AgentsDashboard.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        }else if (response.body().getRole().getId()==4){
-                            setToken(response.body().getToken());
-                            Intent intent = new Intent(getApplicationContext(), RetailersDashboard.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        }
-
-                    }
-
-                }else {
-                    loginLoading.setVisibility(View.GONE);
-                    loginBtn.setVisibility(View.VISIBLE);
-                    errorShower.setTextColor(Color.RED);
-                    errorShower.setText("Something is not Good. This is not your mistake please get support from http://tabadvet.com/support");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                if(t instanceof SocketTimeoutException){
-                    loginLoading.setVisibility(View.GONE);
-                    loginBtn.setVisibility(View.VISIBLE);
-                    errorShower.setTextColor(Color.RED);
-                    errorShower.setText("It takes much time. Please check your connection");
-                }
-            }
-        });
-    }
-
-    public void setToken(String token){
-        SharedPreferences preferences = getSharedPreferences(Constants.getTokenPrefence(),0);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("token",token);
-        editor.commit();
-    }
 }

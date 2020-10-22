@@ -3,9 +3,10 @@ package com.example.foragentss.rooms.DAO;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.foragentss.rooms.entity.User;
+import com.example.foragentss.rooms.entity.UserRoom;
 
 import java.util.List;
 
@@ -13,13 +14,14 @@ import java.util.List;
 public interface UsersDAO {
 
     @Query("select * from users")
-    public LiveData<List<User>> index();
-    @Insert
-    public void store(User user);
+    public LiveData<List<UserRoom>> index();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public void store(UserRoom userRoom);
 
     @Query("select * from users where phone=:phone and password=:password")
-    public LiveData<List<User>> showUser(String phone, String password);
+    public LiveData<List<UserRoom>> showUser(String phone, String password);
 
     @Query("select * from users where phone=:phone")
-    public LiveData<List<User>> me(String phone);
+    public LiveData<List<UserRoom>> me(String phone);
 }

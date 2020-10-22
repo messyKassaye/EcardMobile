@@ -1,8 +1,6 @@
 package com.example.foragentss.auth.commons.fragments;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,15 +22,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foragentss.R;
-import com.example.foragentss.auth.agents.activities.FloatingButtonActivity;
+import com.example.foragentss.auth.agents.activities.CardRequestActivity;
+import com.example.foragentss.auth.agents.activities.SendCardActivity;
 import com.example.foragentss.auth.commons.adapter.SelectCardTypeAdapter;
-import com.example.foragentss.auth.commons.adapter.ShowConnectionAdapter;
 import com.example.foragentss.auth.models.CardRequest;
 import com.example.foragentss.auth.models.CardType;
-import com.example.foragentss.auth.models.ConnectionsData;
-import com.example.foragentss.auth.response.ConnectionsResponse;
+import com.example.foragentss.auth.models.User;
+import com.example.foragentss.auth.response.SuccessResponse;
+import com.example.foragentss.auth.utils.ApiResponse;
+import com.example.foragentss.auth.view_model.CardRequestViewModel;
 import com.example.foragentss.auth.view_model.CardTypeViewModel;
-import com.example.foragentss.auth.view_model.ConnectViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -58,14 +57,17 @@ public class CardRequestCardSelectionFragment extends Fragment implements View.O
     private TextView errorShower;
     private LinearLayout mainLayout,loadingLayout;
     private ArrayList<CardRequest> cardRequestList = new ArrayList<>();
-
-    private ConnectViewModel connectViewModel;
-    private ArrayList<ConnectionsData> connectionsDataArrayList = new ArrayList<>();
-    private ShowConnectionAdapter showConnectionAdapter;
-    private RecyclerView connectionRecyclerView;
-    private LinearLayout connectionsLayout;
+    private User user;
+    private CardRequestViewModel cardRequestViewModel;
+    public ArrayList<Integer> sendedCardRequestId = new ArrayList<>();
+    private String tag;
     public CardRequestCardSelectionFragment() {
         // Required empty public constructor
+    }
+
+    public CardRequestCardSelectionFragment(User userId, String tag){
+        this.user =userId;
+        this.tag = tag;
     }
 
     @Override
@@ -79,6 +81,9 @@ public class CardRequestCardSelectionFragment extends Fragment implements View.O
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_card_rquest_card_selection, container, false);
+
+        cardRequestViewModel = ViewModelProviders.of(getActivity()).get(CardRequestViewModel.class);
+        cardRequestViewModel.storeResponse().observe(getActivity(),this::consumeResponse);
 
         dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -209,13 +214,73 @@ public class CardRequestCardSelectionFragment extends Fragment implements View.O
                             cardRequestList.add(hundredBirrCardRequest);
                         }
 
-                        FloatingButtonActivity floatingButtonActivity=(FloatingButtonActivity)getContext();
-                        floatingButtonActivity.showConnection(cardRequestList);
-
+                        sendCardRequest(cardRequestList);
                     }
             }
         });
         return view;
+    }
+
+    public void sendCardRequest(ArrayList<CardRequest> cardRequests){
+        if (tag.equalsIgnoreCase("send_card_fragment")){
+            SendCardActivity sendCardActivity =(SendCardActivity)getActivity();
+            sendCardActivity.proceed(cardRequests);
+
+        }else {
+            mainLayout.setVisibility(View.GONE);
+            loadingLayout.setVisibility(View.VISIBLE);
+
+            CardRequest cardRequest = cardRequestList.get(0);
+            cardRequest.setCompany_agent_id(user.getId());
+            sendRecursively(0);
+        }
+    }
+
+    public void sendRecursively(int index){
+        CardRequest cardRequest = cardRequestList.get(index);
+        cardRequest.setCompany_agent_id(user.getId());
+        cardRequest.setIndex(index);
+        cardRequest.setPayment_type_id(1);
+        cardRequestViewModel.store(cardRequest);
+
+    }
+
+    private void consumeResponse(ApiResponse apiResponse) {
+
+        switch (apiResponse.status) {
+
+            case LOADING:
+                break;
+
+            case SUCCESS:
+                renderSuccessResponse(apiResponse.data);
+                break;
+
+            case ERROR:
+                System.out.println("ERRORR: "+apiResponse.error.getMessage());
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /*
+     * method to handle success response
+     * */
+    private void renderSuccessResponse(SuccessResponse response) {
+        System.out.println("INDEX:"+response.getIndex());
+        if(response.isStatus()) {
+            sendedCardRequestId.add(response.getCard_request().getId());
+            if (response.getIndex()<cardRequestList.size()){
+                sendRecursively(response.getIndex());
+            }
+            if (response.getIndex()==cardRequestList.size()){
+                CardRequestActivity cardRequestActivity =(CardRequestActivity)getActivity();
+                cardRequestActivity.showPaymentTransaction(user,cardRequestList,sendedCardRequestId);
+            }
+        }
+
     }
 
     public void addCardType(CardType cardType){

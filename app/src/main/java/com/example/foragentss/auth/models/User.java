@@ -1,14 +1,16 @@
 package com.example.foragentss.auth.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User  implements Serializable {
     private int id;
     private String first_name;
     private String last_name;
     private String email;
     private String phone;
+    private String user_name;
     private String password;
     private int role_id;
     private List<Role> role;
@@ -132,5 +134,13 @@ public class User {
 
     public void setBank_account(ArrayList<BankAccount> bank_account) {
         this.bank_account = bank_account;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 }

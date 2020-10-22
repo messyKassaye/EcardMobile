@@ -46,4 +46,8 @@ public class CardRequestRepository {
     public Observable<SuccessResponse> store(CardRequest cardRequest){
         return cardRequestInterface.store(cardRequest);
     }
+
+    public Observable<SuccessResponse> update(int id,String status){
+        return  cardRequestInterface.update(id,status);
+    }
 }

@@ -20,17 +20,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foragentss.R;
-import com.example.foragentss.auth.agents.activities.FloatingButtonActivity;
 import com.example.foragentss.auth.models.BankAccount;
-import com.example.foragentss.auth.models.CardRequest;
 import com.example.foragentss.auth.models.CardRequestPayment;
 import com.example.foragentss.auth.response.SuccessResponse;
 import com.example.foragentss.auth.utils.ApiResponse;
 import com.example.foragentss.auth.view_model.CardRequestPaymentViewModel;
 
 import java.util.ArrayList;
-
-import static com.example.foragentss.constants.Constants.getCardTypeValue;
 
 public class BankAccountAdapter extends RecyclerView.Adapter<BankAccountAdapter.ViewHolder> {
     private ArrayList<BankAccount> bankAccounts;

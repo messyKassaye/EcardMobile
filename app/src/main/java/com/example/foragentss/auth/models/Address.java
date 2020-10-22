@@ -1,6 +1,8 @@
 package com.example.foragentss.auth.models;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private int region_id;
     private int city_id;
     private String specific_name;

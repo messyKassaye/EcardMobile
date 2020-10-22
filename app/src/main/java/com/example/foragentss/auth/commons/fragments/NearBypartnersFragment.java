@@ -52,7 +52,7 @@ public class NearBypartnersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_near_bypartners, container, false);
 
-        adapter = new PartnersAdapter(getContext(),arrayList);
+        adapter = new PartnersAdapter(getContext(),this,arrayList);
         recyclerView = view.findViewById(R.id.near_by_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -62,8 +62,10 @@ public class NearBypartnersFragment extends Fragment {
         nearByViewModel.index().enqueue(new Callback<NearByResponse>() {
             @Override
             public void onResponse(Call<NearByResponse> call, Response<NearByResponse> response) {
-                arrayList.addAll(response.body().getData());
-                adapter.notifyDataSetChanged();
+                if (response.isSuccessful()){
+                    arrayList.addAll(response.body().getData());
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override

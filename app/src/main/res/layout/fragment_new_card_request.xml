@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     app:cardBackgroundColor="@color/colorPrimary"
-    app:contentPadding="20dp"
+    app:contentPadding="10dp"
     android:layout_marginBottom="20dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".auth.agents.fragments.CardRequestFragment"
+    tools:context=".auth.agents.fragments.NewCardRequestFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"

@@ -21,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foragentss.MainActivity;
 import com.example.foragentss.R;
 import com.example.foragentss.auth.agents.AgentsDashboard;
 import com.example.foragentss.auth.models.LoginResponse;
@@ -30,6 +31,8 @@ import com.example.foragentss.home.RegistrationActivity;
 import com.example.foragentss.http.MainHttpAdapter;
 import com.example.foragentss.http.interfaces.LoginService;
 import com.example.foragentss.rooms.view_model.UserViewModel;
+
+import java.net.SocketTimeoutException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -122,19 +125,26 @@ public class RegistrationFragment extends Fragment {
                                     if (response.isSuccessful()){
                                         setToken(response.body().getToken());
                                         int loginRoleId = response.body().getRole().getId();
-                                        RegistrationActivity registrationActivity =(RegistrationActivity)getActivity();
+                                        RegistrationActivity registrationActivity =(RegistrationActivity) getActivity();
                                         registrationActivity.showAddressFragment(loginRoleId);
                                     }else {
 
                                         if (response.code()==409){
+                                            errorShower.setTextColor(Color.RED);
                                             errorShower.setText("Some is register by your email or phone number. please change your email or phone number");
+                                            registerBtn.setVisibility(View.VISIBLE);
+                                            loading.setVisibility(View.GONE);
                                         }
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<LoginResponse> call, Throwable t) {
-                                    Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                                    if(t instanceof SocketTimeoutException){
+                                        loading.setVisibility(View.GONE);
+                                        registerBtn.setVisibility(View.VISIBLE);
+                                        errorShower.setText("It take too much time. Please try again");
+                                    }
                                 }
                             });
 

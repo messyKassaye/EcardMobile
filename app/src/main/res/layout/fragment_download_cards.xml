@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".auth.retailers.fragments.DownloadCardsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:textColor="@color/colorPrimary"
+        android:textSize="17sp"
+        android:text="Download cards, Sell it and increase your income"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/card_type_info"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- Password Label -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:theme="@style/EditTextHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp">
+        <EditText android:id="@+id/download_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/textColor"
+            android:inputType="number"
+            android:textColor="@color/textColor"
+            app:backgroundTint="@color/textColor"
+            android:hint="Enter the amount you want to download"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/downloadErrorShower"
+        android:layout_gravity="center"
+        android:textColor="@android:color/holo_red_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/downloadBTN"
+        android:textAllCaps="false"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/tranparent_button"
+        android:padding="12dp"
+        android:text="Download"/>
+
+    <LinearLayout
+        android:id="@+id/downloadingLayout"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/downloadPBR"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/statusMessage"
+            android:text="Downloading your cards...."
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

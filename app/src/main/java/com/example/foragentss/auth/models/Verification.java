@@ -1,6 +1,8 @@
 package com.example.foragentss.auth.models;
 
-public class Verification {
+import java.io.Serializable;
+
+public class Verification implements Serializable {
     private int user_id;
     private String is_verified;
 

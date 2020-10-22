@@ -1,8 +1,5 @@
 package com.example.foragentss.auth.commons.fragments;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,33 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.foragentss.R;
-import com.example.foragentss.auth.agents.AgentsDashboard;
-import com.example.foragentss.auth.agents.activities.FloatingButtonActivity;
+import com.example.foragentss.auth.agents.activities.CardRequestActivity;
 import com.example.foragentss.auth.commons.adapter.ShowConnectionAdapter;
 import com.example.foragentss.auth.models.CardRequest;
 import com.example.foragentss.auth.models.ConnectionsData;
 import com.example.foragentss.auth.models.User;
-import com.example.foragentss.auth.response.ConnectionsResponse;
 import com.example.foragentss.auth.response.SuccessResponse;
 import com.example.foragentss.auth.utils.ApiResponse;
 import com.example.foragentss.auth.view_model.CardRequestViewModel;
-import com.example.foragentss.auth.view_model.ConnectViewModel;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ShowConnectionFragment extends Fragment {
     private RecyclerView recyclerView;
     private ShowConnectionAdapter adapter;
     private ArrayList<ConnectionsData> arrayList = new ArrayList<>();
-    private ConnectViewModel connectViewModel;
     private CardRequestViewModel cardRequestViewModel;
     private ArrayList<CardRequest> cardRequestArrayList;
     private View view;
@@ -76,28 +63,7 @@ public class ShowConnectionFragment extends Fragment {
         adapter = new ShowConnectionAdapter(getActivity(),this,arrayList);
         recyclerView.setAdapter(adapter);
 
-        connectViewModel = ViewModelProviders.of(getActivity()).get(ConnectViewModel.class);
-        connectViewModel.show("accepted")
-                .enqueue(new Callback<ConnectionsResponse>() {
-                    @Override
-                    public void onResponse(Call<ConnectionsResponse> call, Response<ConnectionsResponse> response) {
-                        view.findViewById(R.id.cardRequestSelectLoadingLayout).setVisibility(View.GONE);
-                        if (response.isSuccessful()&&response.body().getData().size()>0){
-                            view.findViewById(R.id.cardRequestMainLayout)
-                                    .setVisibility(View.VISIBLE);
-                            arrayList.addAll(response.body().getData());
-                            adapter.notifyDataSetChanged();
 
-                        }else {
-                            view.findViewById(R.id.noConnectionLayout).setVisibility(View.VISIBLE);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ConnectionsResponse> call, Throwable t) {
-
-                    }
-                });
         return view;
     }
 
@@ -150,8 +116,8 @@ public class ShowConnectionFragment extends Fragment {
                 sendRecursively(response.getIndex());
             }
             if (response.getIndex()==cardRequestArrayList.size()){
-                FloatingButtonActivity floatingButtonActivity=(FloatingButtonActivity)getActivity();
-                floatingButtonActivity.showPaymentTransaction(selectedUserId,cardRequestArrayList,sendedCardRequestId);
+                CardRequestActivity cardRequestActivity =(CardRequestActivity)getActivity();
+                cardRequestActivity.showPaymentTransaction(selectedUserId,cardRequestArrayList,sendedCardRequestId);
             }
         }
 

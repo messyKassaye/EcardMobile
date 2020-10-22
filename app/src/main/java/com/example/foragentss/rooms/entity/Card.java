@@ -12,8 +12,11 @@ public class Card {
     @ColumnInfo(name = "number")
     private String number;
 
-    @ColumnInfo(name = "type")
-    private String type;
+    @ColumnInfo(name = "card_type_id")
+    private int card_type_id;
+
+    @ColumnInfo(name = "server_card_id")
+    private int server_card_id;
 
     @ColumnInfo(name = "status",defaultValue = "not_soled")
     private String status;
@@ -37,12 +40,12 @@ public class Card {
         this.number = number;
     }
 
-    public String getType() {
-        return type;
+    public int getCard_type_id() {
+        return card_type_id;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCard_type_id(int card_type_id) {
+        this.card_type_id = card_type_id;
     }
 
     public String getStatus() {
@@ -59,5 +62,13 @@ public class Card {
 
     public void setSellsDate(String sellsDate) {
         this.sellsDate = sellsDate;
+    }
+
+    public int getServer_card_id() {
+        return server_card_id;
+    }
+
+    public void setServer_card_id(int server_card_id) {
+        this.server_card_id = server_card_id;
     }
 }

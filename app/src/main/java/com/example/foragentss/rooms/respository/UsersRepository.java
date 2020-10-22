@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.foragentss.rooms.ApplicationRoomDatabase;
 import com.example.foragentss.rooms.DAO.UsersDAO;
-import com.example.foragentss.rooms.entity.User;
+import com.example.foragentss.rooms.entity.UserRoom;
 
 import java.util.List;
 
@@ -19,21 +19,21 @@ public class UsersRepository {
         usersDAO = applicationRoomDatabase.usersDAO();
     }
 
-    public LiveData<List<User>> index(){
+    public LiveData<List<UserRoom>> index(){
         return usersDAO.index();
     }
 
-    public void store(User user){
+    public void store(UserRoom userRoom){
         ApplicationRoomDatabase.dbExecutorService.execute(()->{
-            usersDAO.store(user);
+            usersDAO.store(userRoom);
         });
     }
 
-    public LiveData<List<User>> showUser(String phone, String password){
+    public LiveData<List<UserRoom>> showUser(String phone, String password){
         return usersDAO.showUser(phone,password);
     }
 
-    public LiveData<List<User>> me(String phone){
+    public LiveData<List<UserRoom>> me(String phone){
         return usersDAO.me(phone);
     }
 }

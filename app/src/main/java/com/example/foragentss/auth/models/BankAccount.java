@@ -1,6 +1,8 @@
 package com.example.foragentss.auth.models;
 
-public class BankAccount {
+import java.io.Serializable;
+
+public class BankAccount implements Serializable {
     private int id;
     private int bank_id;
     private String holder_full_name;

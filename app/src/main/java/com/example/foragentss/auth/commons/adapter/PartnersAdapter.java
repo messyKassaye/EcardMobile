@@ -2,7 +2,6 @@ package com.example.foragentss.auth.commons.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,35 +14,35 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foragentss.R;
-import com.example.foragentss.auth.agents.AgentsDashboard;
-import com.example.foragentss.auth.models.Child;
-import com.example.foragentss.auth.models.Connect;
+import com.example.foragentss.auth.commons.fragments.NearBypartnersFragment;
+import com.example.foragentss.auth.models.MyPartner;
 import com.example.foragentss.auth.models.NearbyData;
+import com.example.foragentss.auth.models.User;
 import com.example.foragentss.auth.response.SuccessResponse;
 import com.example.foragentss.auth.utils.ApiResponse;
-import com.example.foragentss.auth.view_model.ConnectViewModel;
-import com.example.foragentss.home.adapter.CitiesAdapter;
-import com.example.foragentss.home.fragments.AddressFragment;
+import com.example.foragentss.auth.view_model.MyPartnerAgentViewModel;
+import com.example.foragentss.auth.view_model.MyPartnersViewModel;
+import com.example.foragentss.rooms.view_model.AgentPartnerViewModel;
 
 import java.util.ArrayList;
 
 public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHolder> {
     private ArrayList<NearbyData> nearbyData;
     private Context context;
-    private ConnectViewModel connectViewModel;
-    private ViewHolder viewHolder;
-    public PartnersAdapter(Context context,ArrayList<NearbyData> placeList) {
+    private ViewHolder viewHolders;
+    private NearBypartnersFragment fragment;
+    private MyPartnerAgentViewModel myPartnerAgentViewModel;
+    public PartnersAdapter(Context context,NearBypartnersFragment fragment,ArrayList<NearbyData> placeList) {
         this.nearbyData = placeList;
         this.context = context;
+        this.fragment = fragment;
 
     }
 
@@ -58,9 +57,8 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
     public void onBindViewHolder(@NonNull PartnersAdapter.ViewHolder viewHolder, int i) {
         NearbyData nearBy = nearbyData.get(i);
 
-
-        Connect connect = new Connect();
-        connect.setCompany_user_id(nearBy.getUser().get(0).getId());
+        myPartnerAgentViewModel = ViewModelProviders.of((AppCompatActivity)context).get(MyPartnerAgentViewModel.class);
+        myPartnerAgentViewModel.storeResponse().observe((AppCompatActivity)context,this::consumeResponse);
 
         viewHolder.full_company_name.setText(nearBy.getUser().get(0).getFirst_name()+" "+
                 nearBy.getUser().get(0).getLast_name());
@@ -102,7 +100,7 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
                                 @Override
                                 public void onClick(View view) {
                                     dialog.dismiss();
-                                    connect(viewHolder,connect);
+                                    connect(viewHolder,nearBy.getUser().get(0));
                                     //addFile();
                                 }
                             });
@@ -115,20 +113,28 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
                                 }
                             });
                     dialog.show();
+                }else {
+                    connect(viewHolder,nearBy.getUser().get(0));
                 }
             }
         });
 
     }
 
-    public  void  connect(ViewHolder viewHolder,Connect connect){
-        connectViewModel = ViewModelProviders.of((AppCompatActivity)context).get(ConnectViewModel.class);
-        connectViewModel.storeResponse().observe((AppCompatActivity)context,this::consumeResponse);
-        this.viewHolder =viewHolder;
-            viewHolder.connect.setVisibility(View.GONE);
-            viewHolder.connectionLoading.setVisibility(View.VISIBLE);
-            connectViewModel.connect(connect);
+    public  void  connect(ViewHolder viewHolder, User user){
+        viewHolders = viewHolder;
+        viewHolder.buttonsLayout.setVisibility(View.GONE);
+        viewHolder.connectionLoading.setVisibility(View.VISIBLE);
 
+        if (user.getRole().get(0).getId()==2){
+            MyPartner myPartner =new MyPartner();
+            myPartner.setPartner_id(user.getId());
+            myPartnerAgentViewModel.store("partner_agent",myPartner);
+        }else {
+            MyPartner myPartner =new MyPartner();
+            myPartner.setAgent_id(user.getId());
+            myPartnerAgentViewModel.store("agent_retailer",myPartner);
+        }
     }
 
     private void consumeResponse(ApiResponse apiResponse) {
@@ -155,9 +161,9 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
      * */
     private void renderSuccessResponse(SuccessResponse response) {
         if(response.isStatus()) {
-            viewHolder.progressBar.setVisibility(View.GONE);
-            viewHolder.connectText.setText("Connection request sent");
-            viewHolder.connectText.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            viewHolders.progressBar.setVisibility(View.GONE);
+            viewHolders.connectText.setText("Connection request sent");
+            viewHolders.connectText.setTextColor(context.getResources().getColor(R.color.colorPrimary));
         }
 
     }
@@ -169,7 +175,7 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView full_company_name,address,roleName;
         private Button avatar,connect;
-        private LinearLayout connectionLoading;
+        private LinearLayout connectionLoading,buttonsLayout;
         private ProgressBar progressBar;
         private TextView connectText;
         private ImageView verification;
@@ -184,6 +190,7 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
             progressBar = itemView.findViewById(R.id.connectPR);
             connectText = itemView.findViewById(R.id.connectText);
             verification = itemView.findViewById(R.id.verification);
+            buttonsLayout = itemView.findViewById(R.id.connectionButtonLayout);
         }
     }
 

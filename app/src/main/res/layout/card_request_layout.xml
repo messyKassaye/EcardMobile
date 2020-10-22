@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="15dp"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/requestAvatar"
+            android:background="@drawable/circle_button"
+            android:textColor="@color/white"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="10dp"
+            android:textSize="20sp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <LinearLayout
+            android:id="@+id/names"
+            android:orientation="vertical"
+            android:layout_toRightOf="@+id/requestAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/requesterName"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/requesterPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_toRightOf="@+id/requestAvatar"
+            android:paddingTop="10dp"
+            android:layout_below="@+id/names"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/horiz_divider"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/cardRequestMainLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_below="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cardTypeName"
+                android:layout_marginBottom="5dp"
+                android:textSize="17sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/cardAmount"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginBottom="5dp"
+                android:textSize="17sp"
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/paymentStatus"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginBottom="5dp"
+                android:textSize="17sp"
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/transactionRedNumber"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="17sp"
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/bankName"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="17sp"
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/cardRequestButtonLayout"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/cardRequestMainLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/spamCardRequest"
+                android:layout_alignParentLeft="true"
+                android:textAllCaps="false"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_light"
+                android:background="@drawable/danger_button"
+                android:text="Report as spam"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/removeCardRequest"
+                android:textAllCaps="false"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerInParent="true"
+                android:background="@drawable/tranparent_button"
+                android:text="Remove"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_alignParentRight="true"
+                android:id="@+id/sendCard"
+                android:textAllCaps="false"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button_shape"
+                android:text="Send"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/cardRequestLoadingLayout"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:layout_below="@+id/cardRequestMainLayout"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="Processing card request..."
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/cardRequestDisplayMessage"
+            android:textColor="@android:color/holo_green_dark"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/cardRequestMainLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
