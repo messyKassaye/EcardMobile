@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
                     android:background="@drawable/tranparent_button"
-                    android:text="Connect"/>
+                    android:text="Send friend request"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/selectBtn"
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
                     android:background="@drawable/button_shape"
-                    android:text="Connect"/>
+                    android:text="Send friend request"/>
 
             </LinearLayout>
 

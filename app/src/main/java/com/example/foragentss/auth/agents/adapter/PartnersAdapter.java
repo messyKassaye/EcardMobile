@@ -48,7 +48,7 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
     public void onBindViewHolder(@NonNull PartnersAdapter.ViewHolder viewHolder, int i) {
         User user = users.get(i);
 
-        viewHolder.fullName.setText(user.getFirst_name()+" "+user.getLast_name());
+        viewHolder.fullName.setText(user.getFirst_name());
         viewHolder.avatar.setText(""+user.getFirst_name().charAt(0));
         if (user.getCompany()==null){
             viewHolder.address.setText(user.getUser_name());
@@ -56,7 +56,6 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
             viewHolder.address.setText(user.getCompany().getName());
         }
         viewHolder.phoneNumber.setText("Phone number: "+user.getPhone());
-        viewHolder.emailAddress.setText("Email address: "+user.getEmail());
         if (role.equalsIgnoreCase("Retailer")){
             viewHolder.sendCardRequest.setText("Send card");
         }

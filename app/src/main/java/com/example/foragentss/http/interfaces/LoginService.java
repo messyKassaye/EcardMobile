@@ -15,7 +15,7 @@ public interface LoginService {
 
     @FormUrlEncoded
     @POST("login")
-    Call<LoginResponse> login(@Field("email") String email, @Field("password") String password);
+    Call<LoginResponse> login(@Field("phone") String email, @Field("password") String password);
 
     @POST("signup")
     Call<LoginResponse> signUP(@Body User signUp);

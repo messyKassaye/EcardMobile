@@ -54,13 +54,13 @@ public class QRCodeShowerActivity extends AppCompatActivity implements View.OnCl
                 .observe(this,cards -> {
                     card = cards.get(0);
                 });
-        aftaCardText = "Afta*805*"+card_number+"#";
+        aftaCardText = "Afta*805*"+card_number+"#"+Constants.getCardTypeValue(card_type_id)+".";
 
         cardTypeName = findViewById(R.id.card_type_name);
         cardTypeName.setText(Constants.getCardTypeValue(card_type_id)+" Birr card");
         qrImage = findViewById(R.id.QRcode);
         card_in_text = findViewById(R.id.card_in_text);
-        card_in_text.setText(card_number);
+        card_in_text.setText(addSpaces(card_number));
 
         notSoldBTN = findViewById(R.id.notSoldBTN);
         notSoldBTN.setOnClickListener(this::onClick);
@@ -84,6 +84,18 @@ public class QRCodeShowerActivity extends AppCompatActivity implements View.OnCl
     public void updateCard(int card_id,String status){
         card.setStatus(status);
         cardsRoomViewModel.store(card);
+    }
+
+    public static String addSpaces(String str) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(str.charAt(0));
+        for (int i = 1; i < str.length(); i++) {
+            if(i%4==0){
+                sb.append("   ");
+            }
+            sb.append(str.charAt(i));
+        }
+        return sb.toString();
     }
 
     @Override

@@ -94,7 +94,6 @@
                 android:background="@drawable/tranparent_button"
                 android:padding="12dp"
                 android:text="I just need to use this device"/>
-
         </LinearLayout>
 
     </LinearLayout>

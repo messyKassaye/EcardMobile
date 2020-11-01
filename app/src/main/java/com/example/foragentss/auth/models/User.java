@@ -7,10 +7,8 @@ import java.util.List;
 public class User  implements Serializable {
     private int id;
     private String first_name;
-    private String last_name;
-    private String email;
     private String phone;
-    private String user_name;
+    private String user_name = "Ecard";
     private String password;
     private int role_id;
     private List<Role> role;
@@ -20,10 +18,8 @@ public class User  implements Serializable {
     private ArrayList<CardPrice> card_price;
     private ArrayList<BankAccount> bank_account;
 
-    public User(String first_name, String last_name, String email, String phone, String password, int role_id) {
+    public User(String first_name,String phone, String password, int role_id) {
         this.first_name = first_name;
-        this.last_name = last_name;
-        this.email = email;
         this.phone = phone;
         this.password = password;
         this.role_id = role_id;
@@ -38,22 +34,6 @@ public class User  implements Serializable {
 
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhone() {

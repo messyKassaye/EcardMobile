@@ -29,7 +29,6 @@ public class DownloadActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Download cards");
 
         card_type_id = getIntent().getStringExtra("card_type_id");
-        Toast.makeText(this,""+card_type_id,Toast.LENGTH_LONG).show();
 
         if (!Constants.isOnline(this)){
             showNoInternet();

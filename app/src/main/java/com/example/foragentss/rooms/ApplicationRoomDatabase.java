@@ -10,24 +10,26 @@ import com.example.foragentss.rooms.DAO.AgentPartnerDAO;
 import com.example.foragentss.rooms.DAO.CardTypeDAO;
 import com.example.foragentss.rooms.DAO.CardsDAO;
 import com.example.foragentss.rooms.DAO.DeviceDAO;
+import com.example.foragentss.rooms.DAO.RetailersDAO;
 import com.example.foragentss.rooms.DAO.UsersDAO;
 import com.example.foragentss.rooms.entity.AgentAndPartner;
 import com.example.foragentss.rooms.entity.Card;
 import com.example.foragentss.rooms.entity.CardTypeRoom;
 import com.example.foragentss.rooms.entity.DeviceRoom;
+import com.example.foragentss.rooms.entity.Retailer;
 import com.example.foragentss.rooms.entity.UserRoom;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {UserRoom.class, Card.class, DeviceRoom.class, CardTypeRoom.class, AgentAndPartner.class},
-        version = 29,
+@Database(entities = {UserRoom.class, Card.class, DeviceRoom.class, CardTypeRoom.class,
+        AgentAndPartner.class, Retailer.class},
+        version = 6,
         exportSchema = false)
 public abstract class ApplicationRoomDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THEARD = 4;
     private static volatile ApplicationRoomDatabase INSTANCE;
     public static final ExecutorService dbExecutorService = Executors.newFixedThreadPool(NUMBER_OF_THEARD);
-
     public static synchronized ApplicationRoomDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
             if (INSTANCE == null) {
@@ -49,4 +51,6 @@ public abstract class ApplicationRoomDatabase extends RoomDatabase {
     public abstract CardTypeDAO cardTypeDAO();
 
     public abstract AgentPartnerDAO agentPartnerDAO();
+
+    public abstract RetailersDAO retailersDAO();
 }

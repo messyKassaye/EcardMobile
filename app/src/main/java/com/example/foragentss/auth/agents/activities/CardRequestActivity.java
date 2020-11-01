@@ -57,11 +57,8 @@ public class CardRequestActivity extends AppCompatActivity {
 
         String role = getIntent().getStringExtra("Role");
         user = (User)getIntent().getSerializableExtra("user_id");
-        if (role.equalsIgnoreCase("Agent")){
-            showCardRequest(user);
-        }else {
-            showLogin();
-        }
+        showCardRequest(user);
+
 
     }
 

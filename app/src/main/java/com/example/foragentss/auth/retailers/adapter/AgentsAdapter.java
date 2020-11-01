@@ -7,20 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foragentss.R;
 import com.example.foragentss.auth.agents.activities.CardRequestActivity;
-import com.example.foragentss.rooms.entity.AgentAndPartner;
+import com.example.foragentss.auth.models.AgentPartner;
 
 import java.util.ArrayList;
 
 public class AgentsAdapter extends RecyclerView.Adapter<AgentsAdapter.ViewHolder> {
-    private ArrayList<AgentAndPartner> banks;
+    private ArrayList<AgentPartner> banks;
     private Context context;
-    public AgentsAdapter(Context context,ArrayList<AgentAndPartner> placeList) {
+    public AgentsAdapter(Context context,ArrayList<AgentPartner> placeList) {
         this.banks = placeList;
         this.context = context;
 
@@ -35,20 +36,26 @@ public class AgentsAdapter extends RecyclerView.Adapter<AgentsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull AgentsAdapter.ViewHolder viewHolder, int i) {
-        AgentAndPartner nearBy = banks.get(i);
-        viewHolder.agentFullName.setText(nearBy.getFull_name());
-        viewHolder.agentPhone.setText(nearBy.getPhone());
-        viewHolder.agentAvatar.setText(String.valueOf(nearBy.getFull_name().charAt(0)));
+        AgentPartner nearBy = banks.get(i);
+        if (nearBy.getUser().size()>0){
+            viewHolder.agentFullName.setText(nearBy.getUser().get(0).getFirst_name());
+            viewHolder.agentPhone.setText(nearBy.getUser().get(0).getPhone());
+            viewHolder.agentAvatar.setText(String.valueOf(nearBy.getUser().get(0).getFirst_name().charAt(0)));
 
-        viewHolder.agentCardRequestBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, CardRequestActivity.class);
-
-                intent.putExtra("Role","Retailer");
-                context.startActivity(intent);
-            }
-        });
+            viewHolder.agentCardRequestBTN.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (nearBy.getUser().get(0).getCard_price().size()>0){
+                        Intent intent = new Intent(context, CardRequestActivity.class);
+                        intent.putExtra("Role","Retailer");
+                        intent.putExtra("user_id",nearBy.getUser().get(0));
+                        context.startActivity(intent);
+                    }else {
+                        Toast.makeText(context,"This agent haven't set his card selling price. Please select other agent",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
     }
 
 

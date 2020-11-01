@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/card_in_text"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"

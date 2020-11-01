@@ -58,8 +58,7 @@ public class CardRequestAdapter extends RecyclerView.Adapter<CardRequestAdapter.
         cardRequestViewModel = ViewModelProviders.of((AppCompatActivity)context).get(CardRequestViewModel.class);
         cardRequestViewModel.storeResponse().observe((AppCompatActivity)context,this::consumeResponse);
 
-        viewHolder.requestName.setText(nearBy.getUser().get(0).getFirst_name()+" "
-                +nearBy.getUser().get(0).getLast_name());
+        viewHolder.requestName.setText(nearBy.getUser().get(0).getFirst_name());
         viewHolder.avatar.setText(String.valueOf(nearBy.getUser().get(0).getFirst_name().charAt(0)));
         viewHolder.phone.setText(nearBy.getUser().get(0).getPhone());
         viewHolder.cardTypeName.setText("Card type: "+nearBy.getCard_type().getValue()+" Birr card");

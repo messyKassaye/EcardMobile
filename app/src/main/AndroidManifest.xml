@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".auth.retailers.activities.QRCodeShowerActivity"></activity>
+        <activity android:name=".auth.retailers.activities.MyProfileActivity"></activity>
+        <activity android:name=".auth.retailers.activities.QRCodeShowerActivity" />
         <activity android:name=".auth.retailers.activities.DownloadActivity" />
         <activity android:name=".auth.agents.activities.SendCardActivity" />
         <activity android:name=".auth.agents.activities.RetailersActivity" />

@@ -57,7 +57,7 @@ public class DeviceConfigurationFragment extends Fragment implements View.OnClic
 
     private TextView deviceInfo;
     private Button yesILostItBTN,iNeedToUseThisDevice;
-    private List<Device> devices;
+    private List<Device> devices =new ArrayList<>();
     public DeviceConfigurationFragment() {
         // Required empty public constructor
     }
@@ -97,7 +97,7 @@ public class DeviceConfigurationFragment extends Fragment implements View.OnClic
 
         meViewModel.me().observe(getActivity(),meResponse -> {
             deviceCheckingLayout.setVisibility(View.GONE);
-            devices = meResponse.getData().getRelations().getDevice();
+            devices.addAll(meResponse.getData().getRelations().getDevice());
             if (devices.size()>0){
                 deviceInfo.setText("You were using another phone with a serial number "
                         +devices.get(0).getSerial_number()+". do you stop using it or have you lost it. " +
@@ -107,26 +107,28 @@ public class DeviceConfigurationFragment extends Fragment implements View.OnClic
                 deviceAlreadySetLayout.setVisibility(View.VISIBLE);
                 deviceMainLayout.setVisibility(View.GONE);
             }else {
-                deviceAlreadySetLayout.setVisibility(View.VISIBLE);
-                deviceMainLayout.setVisibility(View.GONE);
+                deviceAlreadySetLayout.setVisibility(View.GONE);
+                deviceMainLayout.setVisibility(View.VISIBLE);
             }
         });
 
         yesILostItBTN = view.findViewById(R.id.lostDeviceBTN);
         iNeedToUseThisDevice = view.findViewById(R.id.useThisDevice);
 
-        yesILostItBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View item) {
-                view.findViewById(R.id.deviceSettingLoadingLayout)
-                        .setVisibility(View.VISIBLE);
-                deviceAlreadySetLayout.setVisibility(View.GONE);
-                Device device = new Device();
-                device.setSerial_number(Build.SERIAL);
-                deviceViewModel.update(devices.get(0).getId(),device);
+        if (devices.size()>0){
+            yesILostItBTN.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View item) {
+                    view.findViewById(R.id.deviceSettingLoadingLayout)
+                            .setVisibility(View.VISIBLE);
+                    deviceAlreadySetLayout.setVisibility(View.GONE);
+                    Device device = new Device();
+                    device.setSerial_number(Build.SERIAL);
+                    deviceViewModel.update(devices.get(0).getId(),device);
 
-            }
-        });
+                }
+            });
+        }
         iNeedToUseThisDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View itemView) {
@@ -135,7 +137,7 @@ public class DeviceConfigurationFragment extends Fragment implements View.OnClic
                 deviceAlreadySetLayout.setVisibility(View.GONE);
                 Device device = new Device();
                 device.setSerial_number(Build.SERIAL);
-                deviceViewModel.update(devices.get(0).getId(),device);
+                deviceViewModel.store(device);
 
             }
         });
@@ -214,7 +216,7 @@ public class DeviceConfigurationFragment extends Fragment implements View.OnClic
         meViewModel.me().observe(getActivity(),meResponse -> {
             Attribute attribute = meResponse.getData().getAttribute();
             UserRoom userRoom = new UserRoom();
-            userRoom.setFull_name(attribute.getFirst_name()+" "+attribute.getLast_name());
+            userRoom.setFull_name(attribute.getFirst_name());
             userRoom.setEmail(attribute.getEmail());
             userRoom.setPhone(attribute.getPhone());
             userViewModel.store(userRoom);

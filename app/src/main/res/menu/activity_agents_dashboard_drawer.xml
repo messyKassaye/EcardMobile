@@ -17,10 +17,14 @@
             android:id="@+id/card_request"
             android:icon="@drawable/ic_send_black_24dp"
             android:title="My card requests" />
+        <item
+            android:id="@+id/nav_finance"
+            android:icon="@drawable/ic_attach_money_black_24dp"
+            android:title="Finances" />
 
         <item
             android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_attach_money_black_24dp"
+            android:icon="@drawable/ic_account_balance_black_24dp"
             android:title="@string/menu_tools" />
     </group>
 

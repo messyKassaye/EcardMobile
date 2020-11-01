@@ -64,8 +64,7 @@ public class MyCardRequestAdapter  extends RecyclerView.Adapter<MyCardRequestAda
         complainViewModel = ViewModelProviders.of((AppCompatActivity)context).get(ComplainViewModel.class);
         complainViewModel.storeResponse().observe((AppCompatActivity)context,this::consumeResponse);
 
-        viewHolder.requested_to.setText("Requested to: "+nearBy.getUser().get(0).getFirst_name()+" "
-                +nearBy.getUser().get(0).getLast_name());
+        viewHolder.requested_to.setText("Requested to: "+nearBy.getUser().get(0).getFirst_name());
         viewHolder.cardType.setText("Card type: "+nearBy.getCard_type().getValue()+" Birr card");
 
         double unitPrice = nearBy.getUser().get(0).getCard_price().get(0).getPercentage()*nearBy.getCard_type().getValue();

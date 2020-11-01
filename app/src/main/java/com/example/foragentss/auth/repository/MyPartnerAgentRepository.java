@@ -1,6 +1,7 @@
 package com.example.foragentss.auth.repository;
 
 import com.example.foragentss.auth.models.MyPartner;
+import com.example.foragentss.auth.response.AgentPartnerResponse;
 import com.example.foragentss.auth.response.SuccessResponse;
 import com.example.foragentss.auth.retrofit.RetrofitRequest;
 import com.example.foragentss.auth.retrofit.interfaces.MyPartnerAgentInterface;
@@ -14,6 +15,10 @@ public class MyPartnerAgentRepository {
 
     public MyPartnerAgentRepository(){
         myPartnersInterface = RetrofitRequest.getApiInstance().create(MyPartnerAgentInterface.class);
+    }
+
+    public Call<AgentPartnerResponse> index(String path){
+        return myPartnersInterface.index(path);
     }
 
     public Observable<SuccessResponse> store(String path, MyPartner myPartner){

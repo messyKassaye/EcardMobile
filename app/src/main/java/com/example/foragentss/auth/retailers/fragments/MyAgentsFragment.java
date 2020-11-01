@@ -25,10 +25,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foragentss.R;
+import com.example.foragentss.auth.models.AgentPartner;
 import com.example.foragentss.auth.models.Device;
 import com.example.foragentss.auth.models.LoginResponse;
+import com.example.foragentss.auth.response.AgentPartnerResponse;
 import com.example.foragentss.auth.retailers.adapter.AgentsAdapter;
 import com.example.foragentss.auth.view_model.MeViewModel;
+import com.example.foragentss.auth.view_model.MyPartnerAgentViewModel;
 import com.example.foragentss.constants.Constants;
 import com.example.foragentss.http.MainHttpAdapter;
 import com.example.foragentss.http.interfaces.LoginService;
@@ -46,17 +49,17 @@ import retrofit2.Retrofit;
 
 
 public class MyAgentsFragment extends Fragment {
-    private AgentPartnerViewModel agentPartnerViewModel;
-    private LinearLayout noAgentLayout,nearByLayout;
+    private LinearLayout noAgentLayout,nearByLayout,mainLayout;
     private Button showMeNearByAgents;
     private Dialog loginDialog;
     private TextView errorShower;
     private MeViewModel meViewModel;
 
-    private ArrayList<AgentAndPartner> agentAndPartnerArrayList = new ArrayList<>();
+    private ArrayList<AgentPartner> agentAndPartnerArrayList = new ArrayList<>();
     private AgentsAdapter adapter;
     private RecyclerView recyclerView;
 
+    private MyPartnerAgentViewModel myPartnerAgentViewModel;
     public MyAgentsFragment() {
         // Required empty public constructor
     }
@@ -81,6 +84,7 @@ public class MyAgentsFragment extends Fragment {
         noAgentLayout = view.findViewById(R.id.noAgentLayout);
         showMeNearByAgents = view.findViewById(R.id.showMeMyNearByAgent);
         nearByLayout = view.findViewById(R.id.nearByLayout);
+        mainLayout = view.findViewById(R.id.myProfileMainLayout);
 
         adapter = new AgentsAdapter(getContext(),agentAndPartnerArrayList);
         recyclerView  =view.findViewById(R.id.agentsRecyclerView);
@@ -88,52 +92,34 @@ public class MyAgentsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        agentPartnerViewModel = ViewModelProviders.of(getActivity()).get(AgentPartnerViewModel.class);
-        agentPartnerViewModel.index().observe(getActivity(),agentAndPartners -> {
+        myPartnerAgentViewModel = ViewModelProviders.of(getActivity()).get(MyPartnerAgentViewModel.class);
+        myPartnerAgentViewModel.index("agent_retailer").enqueue(new Callback<AgentPartnerResponse>() {
+            @Override
+            public void onResponse(Call<AgentPartnerResponse> call, Response<AgentPartnerResponse> response) {
+                if (response.body().getData().size()>0){
+                    mainLayout.setVisibility(View.VISIBLE);
+                    nearByLayout.setVisibility(View.GONE);
+                    noAgentLayout.setVisibility(View.GONE);
+                    agentAndPartnerArrayList.clear();
+                    agentAndPartnerArrayList.addAll(response.body().getData());
+                    adapter.notifyDataSetChanged();
+                }else {
+                    noAgentLayout.setVisibility(View.VISIBLE);
+                }
+            }
 
-            if (agentAndPartners.size()>0){
-                agentAndPartnerArrayList.clear();
-                agentAndPartnerArrayList.addAll(agentAndPartners);
-                adapter.notifyDataSetChanged();
-            }else {
-                noAgentLayout.setVisibility(View.VISIBLE);
+            @Override
+            public void onFailure(Call<AgentPartnerResponse> call, Throwable t) {
+
             }
         });
 
         showMeNearByAgents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((TextView)loginDialog.findViewById(R.id.loginInfo))
-                        .setText("Login to see partners and agents");
-
-                if (!Constants.isOnline(getContext())){
-                    loginDialog.findViewById(R.id.wifiIsNotOn).setVisibility(View.VISIBLE);
-                    loginDialog.findViewById(R.id.downloadMainLayout).setVisibility(View.GONE);
-                }
-
-                loginDialog.show();
-
+                showNearLayout();
             }
         });
-
-        ((Button)loginDialog.findViewById(R.id.dialogLoginBtn))
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String email = ((EditText)loginDialog.findViewById(R.id.dialogInputPhone))
-                                .getText().toString();
-                        String password =((EditText)loginDialog.findViewById(R.id.dialogInputpassword))
-                                .getText().toString();
-                         errorShower = ((TextView)loginDialog.findViewById(R.id.dialogErrorShower));
-                        if (email.equals("")){
-                            errorShower.setText("Please enter your email address");
-                        }else if (password.equals("")){
-                            errorShower.setText("Please enter your password");
-                        }else {
-                            login(email,password);
-                        }
-                    }
-                });
 
         return view;
     }
@@ -141,72 +127,6 @@ public class MyAgentsFragment extends Fragment {
     public void showNearLayout(){
         noAgentLayout.setVisibility(View.GONE);
         nearByLayout.setVisibility(View.VISIBLE);
-    }
-
-    public void login(String email,String password){
-       ProgressBar loginLoading =((ProgressBar)loginDialog.findViewById(R.id.dialogLoginLoading));
-       loginLoading.setVisibility(View.VISIBLE);
-       Button loginBtn = ((Button)loginDialog.findViewById(R.id.dialogLoginBtn));
-       loginBtn.setVisibility(View.GONE);
-
-        Retrofit retrofit= MainHttpAdapter.getAuthApi();
-        LoginService loginService = retrofit.create(LoginService.class);
-
-        Call<LoginResponse> call = loginService.login(email,password);
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.code()==403){
-                    loginLoading.setVisibility(View.GONE);
-                    loginBtn.setVisibility(View.VISIBLE);
-                    errorShower.setTextColor(Color.RED);
-                    errorShower.setText("Incorrect email or password is used.");
-                }else if(response.code()==200){
-
-                    if(response.body().getRole().getId()==4){
-
-                        meViewModel.me().observe(getActivity(), meResponse -> {
-                            List<Device> devices = meResponse.getData().getRelations().getDevice();
-                            String thisDeviceSerailNumber = Build.SERIAL;
-                            if (devices.size()>0&&devices.get(0).getSerial_number().equalsIgnoreCase(thisDeviceSerailNumber)){
-                                setToken(response.body().getToken());
-                                showNearLayout();
-                                loginDialog.dismiss();
-                            }else {
-
-                            }
-                        });
-
-                    }
-
-                }else {
-                    loginLoading.setVisibility(View.GONE);
-                    loginBtn.setVisibility(View.VISIBLE);
-                    errorShower.setTextColor(Color.RED);
-                    errorShower.setText("Something is not Good. This is not your mistake please get support from http://ecard.com/support");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                if(t instanceof SocketTimeoutException){
-                    loginLoading.setVisibility(View.GONE);
-                    loginBtn.setVisibility(View.VISIBLE);
-                    errorShower.setTextColor(Color.RED);
-                    errorShower.setText("It takes much time. Please check your connection");
-                }else {
-                    Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-
-    public void setToken(String token){
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.getTokenPrefence(),0);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("token",token);
-        editor.commit();
     }
 
 

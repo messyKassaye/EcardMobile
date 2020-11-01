@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.example.foragentss.R;
 import com.example.foragentss.auth.agents.fragments.AllCardRequestFragment;
+import com.example.foragentss.auth.agents.fragments.FinanceFragment;
 import com.example.foragentss.auth.agents.ui.home.HomeFragment;
 import com.example.foragentss.auth.commons.fragments.MyCardRequestFragment;
 import com.example.foragentss.auth.commons.fragments.MyCardsFragment;
@@ -98,12 +99,9 @@ public class AgentsDashboard extends AppCompatActivity implements NavigationView
 
                 setupBadge();
 
-                fullName.setText(meResponse.getData().getAttribute().getFirst_name()+" "
-                        +meResponse.getData().getAttribute().getLast_name());
-                email.setText(meResponse.getData().getAttribute().getEmail());
-                if (meResponse.getData().getAttribute().getAvator().equals("letter")){
-                    profileImage.setImageResource(R.drawable.ic_person_black_24dp);
-                }
+                fullName.setText(meResponse.getData().getAttribute().getFirst_name());
+                email.setText(meResponse.getData().getAttribute().getPhone());
+
             }
         });
     }
@@ -174,6 +172,9 @@ public class AgentsDashboard extends AppCompatActivity implements NavigationView
         }else if (id==R.id.nav_my_cards){
             fragment = new MyCardsFragment();
             getSupportActionBar().setTitle("My cards");
+        }else if (id==R.id.nav_finance){
+            fragment = new FinanceFragment();
+            getSupportActionBar().setTitle("Fiances");
         }
 
         if (fragment != null) {

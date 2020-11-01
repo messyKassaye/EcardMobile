@@ -29,6 +29,7 @@ import com.example.foragentss.auth.response.SuccessResponse;
 import com.example.foragentss.auth.utils.ApiResponse;
 import com.example.foragentss.auth.view_model.MyPartnerAgentViewModel;
 import com.example.foragentss.auth.view_model.MyPartnersViewModel;
+import com.example.foragentss.rooms.entity.AgentAndPartner;
 import com.example.foragentss.rooms.view_model.AgentPartnerViewModel;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
     private ViewHolder viewHolders;
     private NearBypartnersFragment fragment;
     private MyPartnerAgentViewModel myPartnerAgentViewModel;
+    private AgentPartnerViewModel agentPartnerViewModel;
     public PartnersAdapter(Context context,NearBypartnersFragment fragment,ArrayList<NearbyData> placeList) {
         this.nearbyData = placeList;
         this.context = context;
@@ -60,8 +62,9 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
         myPartnerAgentViewModel = ViewModelProviders.of((AppCompatActivity)context).get(MyPartnerAgentViewModel.class);
         myPartnerAgentViewModel.storeResponse().observe((AppCompatActivity)context,this::consumeResponse);
 
-        viewHolder.full_company_name.setText(nearBy.getUser().get(0).getFirst_name()+" "+
-                nearBy.getUser().get(0).getLast_name());
+        agentPartnerViewModel = ViewModelProviders.of((AppCompatActivity)context).get(AgentPartnerViewModel.class);
+
+        viewHolder.full_company_name.setText(nearBy.getUser().get(0).getFirst_name());
         viewHolder.address.setText(nearBy.getRegion_name()+" > "+nearBy.getCity_name());
         viewHolder.avatar.setText(String.valueOf(nearBy.getUser().get(0).getFirst_name().charAt(0)));
         viewHolder.roleName.setText(nearBy.getUser().get(0).getRole().get(0).getName());
@@ -134,6 +137,11 @@ public class PartnersAdapter extends RecyclerView.Adapter<PartnersAdapter.ViewHo
             MyPartner myPartner =new MyPartner();
             myPartner.setAgent_id(user.getId());
             myPartnerAgentViewModel.store("agent_retailer",myPartner);
+            AgentAndPartner agentAndPartner =new AgentAndPartner();
+            agentAndPartner.setFull_name(user.getFirst_name());
+            agentAndPartner.setPhone(user.getPhone());
+            agentAndPartner.setAgent_partner_id(user.getId());
+            agentPartnerViewModel.store(agentAndPartner);
         }
     }
 

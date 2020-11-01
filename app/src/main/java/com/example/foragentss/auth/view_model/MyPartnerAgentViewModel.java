@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.foragentss.auth.models.MyPartner;
 import com.example.foragentss.auth.repository.MyPartnerAgentRepository;
+import com.example.foragentss.auth.response.AgentPartnerResponse;
 import com.example.foragentss.auth.response.SuccessResponse;
 import com.example.foragentss.auth.utils.ApiResponse;
 
@@ -26,6 +27,10 @@ public class MyPartnerAgentViewModel extends AndroidViewModel {
         super(application);
 
         myPartnerAgentRepository = new MyPartnerAgentRepository();
+    }
+
+    public Call<AgentPartnerResponse> index(String path){
+        return myPartnerAgentRepository.index(path);
     }
     public MutableLiveData<ApiResponse> storeResponse() {
         return responseLiveData;

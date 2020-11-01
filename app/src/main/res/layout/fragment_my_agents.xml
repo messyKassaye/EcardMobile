@@ -16,7 +16,7 @@
 
             <TextView
                 android:id="@+id/noAgentInfo"
-                android:text="You have select your agent. having agent will help you to get cards from where you are. There are many Partners and agents near by your region and city. Do you want to see them and do you want to connect with them?"
+                android:text="You haven't select your agent. having agent will help you to get cards from where you are. There are many Partners and agents near by your region and city. Do you want to see them and do you want to connect with them?"
                 android:textSize="17sp"
                 android:layout_marginBottom="10dp"
                 android:layout_gravity="center"

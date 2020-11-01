@@ -49,7 +49,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         myPartnerAgentViewModel.storeResponse().observe((AppCompatActivity)context,this::consumeResponse);
         viewHolders = viewHolder;
         viewHolder.notificationName.setText(nearBy.getEntity().getMessage());
-        viewHolder.notifierName.setText(nearBy.getUser().get(0).getFirst_name()+" "+nearBy.getUser().get(0).getLast_name());
+        viewHolder.notifierName.setText(nearBy.getUser().get(0).getFirst_name());
         viewHolder.mainNotificationMessage.setText(nearBy.getMessage());
         viewHolder.avatar.setText(String.valueOf(nearBy.getUser().get(0).getFirst_name().charAt(0)));
 

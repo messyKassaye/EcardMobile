@@ -45,8 +45,7 @@ public class ShowConnectionAdapter extends RecyclerView.Adapter<ShowConnectionAd
         ConnectionsData nearBy=cardTypes.get(i);
 
 
-        viewHolder.full_company_name.setText(nearBy.getUser().get(0).getFirst_name()+" "+
-                nearBy.getUser().get(0).getLast_name());
+        viewHolder.full_company_name.setText(nearBy.getUser().get(0).getFirst_name());
         viewHolder.address.setText(nearBy.getUser().get(0).getRole().get(0).getName());
         viewHolder.avatar.setText(String.valueOf(nearBy.getUser().get(0).getFirst_name().charAt(0)));
         if (nearBy.getUser().get(0).getVerification()!=null){
